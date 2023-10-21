@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Calculator</title>
+    <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+</head>
+<style type="text/css">
+#border{
+    position: absolute;
+    width: 506px;
+    height: 620px;
+    top: 100px;
+    left: 400px;
+    box-sizing: border-box;
+    border: 3px solid rgba(0, 0, 0, 0.47);
+    border-radius: 30px;
+    background-color: rgba(0, 0, 0, 0.05);
+}
+#result_border{
+    position: absolute;
+    width: 426px;
+    height: 61px;
+    margin-left: 36px;
+    margin-top: 70px;
+    box-sizing: border-box;
+    border: 3px solid rgba(0, 0, 0, 0.47);
+    text-align: right;
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 40px;
+    line-height: 61px;
+    overflow: hidden;
+}
+#Calculator{
+    position: absolute;
+    width: 181px;
+    height: 37px;
+    margin-top: 20px;
+    margin-left: 20px;
+    color: rgba(0, 0, 0, 0.6);
+    font-size: 24px;
+    display: block;
+    font-weight: 400;
+    line-height: 26px;
+    letter-spacing: 0px;
+    text-align: left;
+}
+.button{
+    position: absolute;
+    width: 90px;
+    height: 46px;
+    margin-top: 100px;
+    box-sizing: border-box;
+    border: 2px solid rgba(0, 0, 0, 0.47);
+    border-radius: 5px;
+}
+.button:hover{
+    background-color: rgba(0, 0, 0, 0.3);
+}  
+.fuhao{
+    font-size: 30px;
+    color: rgba(0, 0, 0, 0.47);
+    text-align: center;
+    display: block;
+    line-height: 46px;
+}
+#history_juti{
+    position: absolute;
+    top: 100px;
+    left: 130px;
+    box-sizing: border-box;
+    border: 3px solid rgba(0, 0, 0, 0.47);
+    border-radius: 30px;
+    background-color: rgba(0, 0, 0, 0.281);
+    display: none; /* 初始状态隐藏 */
+    overflow: auto;
+}
+#history{
+    position: absolute;
+    width: 250px;
+    height: 620px;
+    top: 100px;
+    left: 130px;
+    box-sizing: border-box;
+    border: 3px solid rgba(0, 0, 0, 0.47);
+    border-radius: 30px;
+    background-color: rgba(0, 0, 0, 0.05);
+    display: none; /* 初始状态隐藏 */
+    overflow: auto;
+}
+.close-button {
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    top: 10px;
+    right: 10px;
+    font-size: 20px;
+    cursor: pointer;
+}
+#list-container{
+    position: absolute;
+    width: 220px;
+    height: 520px;
+    left: 10px;
+    top: 60px;
+}
+.div-style {
+    border: 1px solid #000; 
+    border-radius: 10px;
+    padding: 5px; 
+    white-space: nowrap;  /* 文本不换行 */
+    overflow-x: auto;     /* 横向滚动条 */
+    position: relative;
+    margin-left: -5px;
+    width: 220px;
+    height: 30px;
+    background-color: white;
+    color: black;
+    text-align: left;
+    line-height: 30px;
+}   
+.div-style:hover{
+    background-color: rgba(0, 0, 0, 0.2);
+}
+</style>
+<body>
+<div id="border">
+    <span id="Calculator">Calculator</span>
+    <!-- 结果显示框 -->
+    <div id="result_border"></div> 
+    <!-- 按钮 -->
+        <div class="button" onclick="oper('%')" style="margin-left: 40px;margin-top:158px;">
+            <span class="fuhao">%</span></div>
+        <div class="button" onclick="oper('√(')" style="margin-left: 150px;margin-top:158px;">
+            <span class="fuhao">\(\sqrt{x}\)</span>
+        </div>
+        <div class="button" onclick="oper('^2')" style="margin-left: 260px;margin-top:158px;">
+            <span class="fuhao">\(x^2\)</span>
+        </div>
+        <div class="button" onclick="oper('^(-1)')" style="margin-left: 370px;margin-top:158px;">
+            <span class="fuhao">\(1/x\)</span>
+        </div>
+        <div class="button" onclick="oper('sin(')" style="margin-left: 40px;margin-top:216px;">
+            <span class="fuhao">\(\sin{x}\)</span>
+        </div>
+        <div class="button" onclick="oper('cos(')" style="margin-left: 150px;margin-top:216px;">
+            <span class="fuhao">\(\cos{x}\)</span>
+        </div>
+        <div class="button" onclick="oper('(')"style="margin-left: 260px;margin-top:216px;">
+            <span class="fuhao">(</span>
+        </div>
+        <div class="button" onclick="oper(')')" style="margin-left: 370px;margin-top:216px;">
+            <span class="fuhao">)</span>
+        </div>
+        <div class="button" onclick="qingkong()" style="margin-left: 40px;margin-top:274px;">
+            <span class="fuhao">C</span>
+        </div>
+        <div class="button" onclick="back()" style="margin-left: 150px;margin-top:274px;">
+            <span class="fuhao"><—</span>
+        </div>
+        <div class="button" onclick="oper('ln(')" style="margin-left: 260px;margin-top:274px;">
+            <span class="fuhao">\(lnx\)</span>
+        </div>
+        <div class="button" onclick="oper('÷')" style="margin-left: 370px;margin-top:274px;">
+            <span class="fuhao">&divide</span>
+        </div>
+        <div class="button" onclick="num(7)" style="margin-left: 40px;margin-top:332px;">
+            <span class="fuhao">7</span>
+        </div>
+        <div class="button" onclick="num(8)" style="margin-left: 150px;margin-top:332px;">
+            <span class="fuhao">8</span>
+        </div>
+        <div class="button" onclick="num(9)" style="margin-left: 260px;margin-top:332px;">
+            <span class="fuhao">9</span>
+        </div>
+        <div class="button" onclick="oper('×')" style="margin-left: 370px;margin-top:332px;">
+            <span class="fuhao">&times</span>
+        </div>
+        <div class="button" onclick="num(4)" style="margin-left: 40px;margin-top:390px;">
+            <span class="fuhao">4</span>
+        </div>
+        <div class="button" onclick="num(5)" style="margin-left: 150px;margin-top:390px;">
+            <span class="fuhao">5</span>
+        </div>
+        <div class="button" onclick="num(6)" style="margin-left: 260px;margin-top:390px;">
+            <span class="fuhao">6</span>
+        </div>
+        <div class="button" onclick="oper('-')" style="margin-left: 370px;margin-top:390px;">
+            <span class="fuhao">&#8722</span>
+        </div>
+        <div class="button" onclick="num(1)" style="margin-left: 40px;margin-top:448px;">
+            <span class="fuhao">1</span>
+        </div>
+        <div class="button" onclick="num(2)" style="margin-left: 150px;margin-top:448px;">
+            <span class="fuhao">2</span>
+        </div>
+        <div class="button" onclick="num(3)" style="margin-left: 260px;margin-top:448px;">
+            <span class="fuhao">3</span>
+        </div>
+        <div class="button" onclick="num('+')" style="margin-left: 370px;margin-top:448px;">
+            <span class="fuhao">&#x2b</span>
+        </div>
+        <div class="button" onclick="toggleHistory()" style="margin-left: 40px;margin-top:506px;">
+            <span class="fuhao" style="font-size: larger;">ans</span>
+        </div>        
+        <div class="button" onclick="num(0)" style="margin-left: 150px;margin-top:506px;">
+            <span class="fuhao">0</span>
+        </div>
+        <div class="button" onclick="oper('.')" style="margin-left: 260px;margin-top:506px;">
+            <span class="fuhao">.</span>
+        </div>
+        <div class="button" id="calculate" onclick="calculate()" style="margin-left: 370px;margin-top:506px;">
+            <span class="fuhao">&#x3d</span>
+        </div>        
+</div>
+<!-- 历史记录 -->
+<div id="history">
+    <img src="close.png" class="close-button" onclick="closeHistory()">
+    <div id="list-container">
+    </div>
+</div>
+</body>
+<script type="text/javascript">
+    // 按钮功能定义
+    function num(number){
+        var result = document.getElementById("result_border")
+        result.innerHTML = result.innerHTML + number 
+    }
+    function oper(operator){
+        var result = document.getElementById("result_border")
+        result.innerHTML = result.innerHTML + operator
+    }
+    function back(){
+        var result = document.getElementById("result_border")
+        var len = result.innerHTML.length;
+        result.innerHTML = result.innerHTML.substr(0, len-1);
+    }
+    function qingkong(){
+        var result = document.getElementById("result_border")
+        result.innerHTML = ""
+    }
+    // 使用Post请求后端进行计算并返回计算结果
+    function calculate() {
+        var result = document.getElementById("result_border").textContent;
+        fetch('http://127.0.0.1:8000/calculate', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',  // 将Content-Type设置为application/json
+            },
+            body: JSON.stringify({ expression: result }),  // 将数据编码为JSON
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.result ||data.result==0) {
+                document.getElementById("result_border").textContent = data.result;
+            } else if (data.error) {
+                alert(`Error: ${data.error}`);
+            }
+        });
+    }
+
+    // 定义history按钮的点击事件即Post请求后端读数据库并返回结果
+    function toggleHistory() {
+        var historyDiv = document.getElementById("history");
+        if (historyDiv.style.display === "block") {
+            historyDiv.style.display = "none";
+        } else {
+            historyDiv.style.display = "block";
+        }
+
+        fetch('http://127.0.0.1:8000/history', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json', 
+            },
+            body: 1, 
+        })
+        .then(response => response.json())
+        .then(data => {
+            if (data.result) {
+                // 找到列表容器的引用
+                var listContainer = document.getElementById("list-container");
+                // 清空列表容器
+                listContainer.innerHTML = "";
+                // 遍历列表并创建并插入 <div> 元素
+                data.result.forEach(function(elementText) {
+                    var div = document.createElement("div");  // 创建 <div> 元素
+                    // 设置 <div> 的样式属性
+                    div.classList.add("div-style"); 
+                    div.style.marginTop = "5px";
+                    div.innerHTML = elementText;  
+                    div.onclick=function(){
+                        handleDivClick(elementText)
+                    };
+                    listContainer.appendChild(div); 
+                });
+            } else if (data.error) {
+                alert("empty!");
+            }
+        });
+    }
+ 
+</script>
+</html>
